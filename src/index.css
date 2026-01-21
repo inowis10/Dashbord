@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap');
 
 :root {
+  /* Dark Theme (Default) */
   --bg-primary: #020617;
   --bg-secondary: #0f172a;
   --accent-blue: #38bdf8;
@@ -10,13 +11,53 @@
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-
   --glass-bg: rgba(15, 23, 42, 0.6);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-highlight: rgba(255, 255, 255, 0.05);
   --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
-
   --card-radius: 1.5rem;
+  --bg-grid: rgba(56, 189, 248, 0.05);
+}
+
+[data-theme='light'] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --accent-blue: #0284c7;
+  --accent-purple: #9333ea;
+  --accent-cyan: #0891b2;
+  --accent-pink: #db2777;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --glass-highlight: rgba(0, 0, 0, 0.02);
+  --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+  --bg-grid: rgba(2, 132, 199, 0.03);
+}
+
+/* Background Animated Grid */
+.bg-grid-animation {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(var(--bg-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+  opacity: 0.5;
+  animation: grid-move 20s infinite linear;
+}
+
+@keyframes grid-move {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 50px 50px;
+  }
 }
 
 * {
@@ -137,6 +178,39 @@ h3,
   }
 }
 
+.theme-toggle-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+}
+
+.theme-toggle {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--accent-blue);
+  padding: 0.75rem;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+.dashboard-container {
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
 .header {
   margin-bottom: 4rem;
   text-align: center;
@@ -146,11 +220,15 @@ h3,
   font-size: 4rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 1rem;
+}
+
+.premium-title {
+  text-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
 }
 
 .header p {
@@ -166,7 +244,7 @@ h3,
   align-items: center;
   gap: 0.75rem;
   margin-top: 2rem;
-  padding: 1rem 2.5rem;
+  padding: 1rem 3rem;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   color: white;
   text-decoration: none;
@@ -180,13 +258,14 @@ h3,
   transition: all 0.4s cubic-bezier(0.2, 1, 0.2, 1);
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Main Primary Button - Highlighted */
 .cta-button.cta-featured {
   background: linear-gradient(135deg, #fff 0%, var(--accent-blue) 50%, var(--accent-purple) 100%);
   background-size: 200% auto;
-  color: var(--bg-primary);
+  color: #000;
   border: none;
   animation: glow-pulse 3s infinite, flow-bg 5s infinite linear;
   padding: 1.25rem 3.5rem;
