@@ -353,10 +353,19 @@ const PricingCard = ({ title, price, description, features, isPopular, delay, on
 const AddonCard = ({ icon: Icon, title, price, description }) => (
   <motion.div
     className="addon-card"
-    whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.03)' }}
+    variants={{
+      hidden: { opacity: 0, y: 20 },
+      visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100 } }
+    }}
+    whileHover={{ y: -5 }}
   >
     <div className="addon-icon">
-      <Icon size={24} />
+      <motion.div
+        animate={{ y: [0, -3, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Icon size={24} />
+      </motion.div>
     </div>
     <div className="addon-content">
       <h4>{title}</h4>
@@ -712,7 +721,13 @@ function App() {
         {/* Add-ons & Optional */}
         <div className="addons-container" style={{ marginTop: '4rem' }}>
           <h3 className="section-subtitle">Potencia tu Plan (Opcionales)</h3>
-          <div className="addons-grid">
+          <motion.div
+            className="addons-grid"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
             <AddonCard
               icon={Bot}
               title="Automatización Simple"
@@ -737,7 +752,7 @@ function App() {
               description="Servidores rápidos y tu nombre .cl/.com"
               price="75.000 / año"
             />
-          </div>
+          </motion.div>
         </div>
 
         {/* Trust Banner */}
