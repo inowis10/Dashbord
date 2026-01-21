@@ -21,7 +21,18 @@ import {
   FileText,
   ShieldAlert,
   Table,
-  Bot
+  Bot,
+  X,
+  Send,
+  Check,
+  Star,
+  Server,
+  Briefcase,
+  Play,
+  Film,
+  Linkedin,
+  Instagram,
+  Mail
 } from 'lucide-react';
 import './index.css';
 
@@ -140,6 +151,223 @@ const StoryItem = ({ index, title, desc, image, delay, onOpen }) => {
   );
 };
 
+const TypingIndicator = () => (
+  <div className="typing-indicator">
+    <div className="typing-dot"></div>
+    <div className="typing-dot"></div>
+    <div className="typing-dot"></div>
+  </div>
+);
+
+const WhatsAppWidget = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+
+  const toggleChat = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+      setIsTyping(true);
+      setShowMessage(false);
+      setTimeout(() => {
+        setIsTyping(false);
+        setShowMessage(true);
+      }, 1500);
+    } else {
+      setIsOpen(false);
+      // Reset states when closing
+      setTimeout(() => {
+        setIsTyping(false);
+        setShowMessage(false);
+      }, 300);
+    }
+  };
+
+  const handleAction = (message) => {
+    const phone = "56950901683"; // Número actualizado
+    const text = encodeURIComponent(message);
+    window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+  };
+
+  return (
+    <div className="whatsapp-widget-container">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="chat-window"
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          >
+            <div className="chat-header">
+              <div className="chat-avatar">
+                <Bot size={24} />
+              </div>
+              <div className="chat-info">
+                <h4>Soporte Premium</h4>
+                <p>En línea ahora</p>
+              </div>
+              <button className="chat-close" onClick={toggleChat}>
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="chat-body">
+              <AnimatePresence mode="wait">
+                {isTyping && (
+                  <motion.div
+                    key="typing"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="chat-bubble"
+                    style={{ width: 'fit-content' }}
+                  >
+                    <TypingIndicator />
+                  </motion.div>
+                )}
+
+                {showMessage && (
+                  <motion.div
+                    key="message"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="chat-content"
+                  >
+                    <div className="chat-bubble" style={{ marginBottom: '1rem' }}>
+                      ¡Hola! 👋 ¿En qué podemos ayudarte hoy para potenciar tu negocio?
+                    </div>
+
+                    <div className="chat-actions">
+                      <motion.button
+                        className="action-btn"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 }}
+                        onClick={() => handleAction("Hola, quiero cotizar un proyecto similar.")}
+                      >
+                        Quiero cotizar un proyecto
+                        <Send size={16} />
+                      </motion.button>
+                      <motion.button
+                        className="action-btn"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.2 }}
+                        onClick={() => handleAction("Hola, tengo una duda sobre sus servicios.")}
+                      >
+                        Tengo una duda
+                        <MessageCircle size={16} />
+                      </motion.button>
+                      <motion.button
+                        className="action-btn"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3 }}
+                        onClick={() => handleAction("Hola, quiero ver más ejemplos.")}
+                      >
+                        Ver más ejemplos
+                        <ExternalLink size={16} />
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <motion.button
+        className="whatsapp-trigger"
+        onClick={toggleChat}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <MessageCircle size={32} fill="white" />
+        <span className="pulse-badge"></span>
+      </motion.button>
+    </div>
+  );
+};
+
+const PricingCard = ({ title, price, description, features, isPopular, delay, onSelect }) => {
+  return (
+    <motion.div
+      className={`glass-card pricing ${isPopular ? 'popular' : ''}`}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.6 }}
+      whileHover={{ y: -10 }}
+    >
+      {isPopular && (
+        <div className="popular-badge">
+          <Star size={12} fill="currentColor" /> MÁS VENDIDO
+        </div>
+      )}
+
+      <div className="pricing-header">
+        <h3 className={`pricing-title ${isPopular ? 'premium-title' : ''}`}>{title}</h3>
+        <div className="pricing-price">
+          <span className="currency">$</span>
+          {price.toLocaleString('es-CL')}
+          <span className="period">CLP</span>
+        </div>
+        <p className="pricing-desc">{description}</p>
+      </div>
+
+      <div className="pricing-divider"></div>
+
+      <ul className="pricing-features">
+        {features.map((feature, i) => (
+          <li key={i}>
+            <div className="check-icon">
+              <Check size={14} strokeWidth={3} />
+            </div>
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div className="pricing-footer">
+        <motion.button
+          className={`pricing-btn ${isPopular ? 'btn-popular' : ''}`}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onSelect}
+        >
+          Seleccionar Plan
+        </motion.button>
+        {isPopular && (
+          <p className="recommendation-note">
+            <Star size={12} className="inline-icon" /> Recomendado por equilibrio precio/calidad
+          </p>
+        )}
+      </div>
+    </motion.div>
+  );
+};
+
+const AddonCard = ({ icon: Icon, title, price, description }) => (
+  <motion.div
+    className="addon-card"
+    whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.03)' }}
+  >
+    <div className="addon-icon">
+      <Icon size={24} />
+    </div>
+    <div className="addon-content">
+      <h4>{title}</h4>
+      <p>{description}</p>
+    </div>
+    <div className="addon-price">
+      {typeof price === 'string' ? price : `$${price.toLocaleString('es-CL')}`}
+    </div>
+  </motion.div>
+);
+
 const FlowStep = ({ title, sublabel, icon: Icon, isFirst, isLast }) => {
   return (
     <div className="flow-step">
@@ -184,7 +412,7 @@ function App() {
       index: 3,
       title: "Paso 3: Automatización",
       desc: "Análisis y disparo de acciones inmediatas basadas en los datos capturados.",
-      image: "/story3.png"
+      image: "/story3.jpg"
     },
     {
       index: 4,
@@ -305,25 +533,25 @@ function App() {
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.2, 1, 0.2, 1] }}
+          transition={{ duration: 0.6, ease: [0.2, 1, 0.2, 1] }}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}
         >
           <Bot size={48} className="text-accent-blue" strokeWidth={1.5} style={{ filter: 'drop-shadow(0 0 15px rgba(56, 189, 248, 0.5))' }} />
-          Landing Page de Datos
+          <span className="premium-title">Página web inteligente para tu negocio</span>
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.2, 1, 0.2, 1] }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.2, 1, 0.2, 1] }}
           style={{ maxWidth: '700px', margin: '1.5rem auto 0' }}
         >
-          Automatiza registros y entrega links personalizados por WhatsApp o email, sin trabajo manual, y aumenta tus ventas.
+          Recibe datos de clientes, envía mensajes automáticos por WhatsApp o email y entrega links personalizados, todo sin que tengas que hacerlo a mano.
         </motion.p>
         <motion.div
           className="button-group"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4, ease: [0.2, 1, 0.2, 1] }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.2, 1, 0.2, 1] }}
         >
           <motion.a
             href="https://osorock.netlify.app/"
@@ -340,7 +568,7 @@ function App() {
           className="button-group"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.6, ease: [0.2, 1, 0.2, 1] }}
+          transition={{ duration: 0.6, delay: 0.3, ease: [0.2, 1, 0.2, 1] }}
         >
           <motion.a
             href="#"
@@ -390,19 +618,143 @@ function App() {
       </div>
 
       <div className="header" style={{ marginTop: '8rem', marginBottom: '2rem' }}>
-        <h2 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Modern Dashboard</h2>
-        <p>Control centralizado de operaciones digitales con visualización basada en datos y estética de alto impacto.</p>
+        <h2 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Así funciona tu página web</h2>
+        <p style={{ maxWidth: '800px', margin: '0 auto', lineHeight: '1.6' }}>
+          Al completar el formulario, tus datos se guardan en Excel y se envía un mensaje automático por WhatsApp o correo. <br />
+          Todo 100% automático, sin trabajo manual y sin perder clientes.
+        </p>
 
-        <div className="story-gallery">
-          {storyImages.map((story) => (
-            <StoryItem
-              key={story.index}
-              {...story}
-              delay={story.index * 0.1}
-              onOpen={openImage}
-            />
-          ))}
+        <div className="video-placeholder-container">
+          <motion.div
+            className="video-placeholder"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="video-icon-wrapper">
+              <Play size={48} className="video-play-icon" fill="currentColor" />
+            </div>
+            <div className="video-content">
+              <h3>Demo en Acción</h3>
+              <p>Próximamente: Mira cómo funciona el sistema automático en tiempo real.</p>
+            </div>
+            {/* Abstract Background Elements */}
+            <div className="video-bg-glow"></div>
+          </motion.div>
         </div>
+      </div>
+
+      {/* Pricing Section */}
+      <div className="pricing-section" style={{ marginTop: '8rem' }}>
+        <div className="header">
+          <h2 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Planes Páginas Web</h2>
+          <p>Diseñadas para convertir visitantes en clientes, con automatización y seguridad incluida.</p>
+        </div>
+
+        <div className="pricing-grid">
+          <PricingCard
+            title="Plan Básico"
+            price={199000}
+            description="Ideal para emprendedores que quieren presencia profesional rápida."
+            delay={0}
+            features={[
+              "1 landing page moderna y responsive",
+              "1 sección principal",
+              "Botón de WhatsApp",
+              "Formulario de contacto simple",
+              "Optimización de velocidad",
+              "Seguridad web incluida 🔐",
+              "Soporte post-entrega por 7 días",
+              "Entrega: 3 a 5 días hábiles"
+            ]}
+            onSelect={() => window.open(`https://wa.me/56950901683?text=${encodeURIComponent("Hola, me interesa el Plan Básico de $199.000")}`, '_blank')}
+          />
+
+          <PricingCard
+            title="Plan Premium"
+            price={399000}
+            isPopular={true}
+            description="Perfecto para negocios que quieren generar clientes automáticamente."
+            delay={0.1}
+            features={[
+              "Todo lo del Plan Básico",
+              "Hasta 5 secciones personalizadas",
+              "Animaciones suaves y diseño atractivo",
+              "Automatización n8n: Form → Correo",
+              "Automatización n8n: Form → Sheets",
+              "SEO básico incluido",
+              "Seguridad avanzada 🔐",
+              "Entrega: 5 a 7 días hábiles"
+            ]}
+            onSelect={() => window.open(`https://wa.me/56950901683?text=${encodeURIComponent("Hola, me interesa el Plan Premium de $399.000 (Recomendado)")}`, '_blank')}
+          />
+
+          <PricingCard
+            title="Plan Avanzado"
+            price={699000}
+            description="Para empresas que quieren vender y escalar con procesos automáticos."
+            delay={0.2}
+            features={[
+              "Todo lo del Plan Premium",
+              "Automatización: Form → WhatsApp",
+              "Registro en CRM básico",
+              "Gestión de clientes (Pipeline)",
+              "Copywriting para ventas",
+              "Integración redes sociales",
+              "Soporte prioritario",
+              "Seguridad premium 🔐"
+            ]}
+            onSelect={() => window.open(`https://wa.me/56950901683?text=${encodeURIComponent("Hola, me interesa el Plan Avanzado de $699.000")}`, '_blank')}
+          />
+        </div>
+
+        {/* Add-ons & Optional */}
+        <div className="addons-container" style={{ marginTop: '4rem' }}>
+          <h3 className="section-subtitle">Potencia tu Plan (Opcionales)</h3>
+          <div className="addons-grid">
+            <AddonCard
+              icon={Bot}
+              title="Automatización Simple"
+              description="Correo automático o registro en planilla."
+              price={50000}
+            />
+            <AddonCard
+              icon={Zap}
+              title="Automatización Media"
+              description="WhatsApp + correo automático instantáneo."
+              price={90000}
+            />
+            <AddonCard
+              icon={Cpu}
+              title="Automatización Completa"
+              description="Sistema tipo CRM + flujos de venta."
+              price="150k - 200k"
+            />
+            <AddonCard
+              icon={Server}
+              title="Hosting y Dominio"
+              description="Servidores rápidos y tu nombre .cl/.com"
+              price="75.000 / año"
+            />
+          </div>
+        </div>
+
+        {/* Trust Banner */}
+        <motion.div
+          className="trust-banner"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          <div className="trust-content">
+            <ShieldCheck size={32} className="trust-icon" />
+            <div>
+              <h4>Seguridad Web Incluida en Todos los Planes</h4>
+              <p>Certificado SSL • Protección Anti-Spam • Datos Cifrados • Copias de Seguridad</p>
+            </div>
+          </div>
+        </motion.div>
       </div>
 
       <ImageModal
@@ -412,22 +764,38 @@ function App() {
         onClose={closeImage}
       />
 
-      <footer style={{ marginTop: '8rem', textAlign: 'center', color: 'var(--text-muted)', paddingBottom: '4rem', fontSize: '0.875rem' }}>
-        <p>© 2026 Dashboard Premium • Construido para la Excelencia Digital</p>
+      <footer style={{ marginTop: '8rem', textAlign: 'center', paddingBottom: '4rem' }}>
+        <div className="social-links">
+          <motion.a
+            href="#"
+            className="social-icon linkedin"
+            whileHover={{ y: -5, scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Linkedin size={20} />
+          </motion.a>
+          <motion.a
+            href="#"
+            className="social-icon instagram"
+            whileHover={{ y: -5, scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Instagram size={20} />
+          </motion.a>
+          <motion.a
+            href="#"
+            className="social-icon gmail"
+            whileHover={{ y: -5, scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Mail size={20} />
+          </motion.a>
+        </div>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>© 2026 Simón Labraña Arias. Todos los derechos reservados.</p>
       </footer>
 
       {/* Botón Flotante de WhatsApp */}
-      <motion.a
-        href="#"
-        className="whatsapp-float"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 1, type: 'spring', stiffness: 260, damping: 20 }}
-        whileHover={{ scale: 1.15 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        <MessageCircle size={32} fill="white" />
-      </motion.a>
+      <WhatsAppWidget />
     </div>
   );
 }
