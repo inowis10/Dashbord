@@ -802,7 +802,9 @@ function App() {
       <footer style={{ marginTop: '8rem', textAlign: 'center', paddingBottom: '4rem' }}>
         <div className="social-links">
           <motion.a
-            href="#"
+            href="https://www.linkedin.com/in/simon-labra%C3%B1a-arias/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="social-icon linkedin"
             whileHover={{ y: -5, scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
@@ -818,7 +820,7 @@ function App() {
             <Instagram size={20} />
           </motion.a>
           <motion.a
-            href="#"
+            href="mailto:simontillo10@gmail.com"
             className="social-icon gmail"
             whileHover={{ y: -5, scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
