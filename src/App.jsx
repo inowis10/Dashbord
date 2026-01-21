@@ -808,6 +808,7 @@ function App() {
             className="social-icon linkedin"
             whileHover={{ y: -5, scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
+            onClick={(e) => e.stopPropagation()}
           >
             <Linkedin size={20} />
           </motion.a>
@@ -816,6 +817,7 @@ function App() {
             className="social-icon instagram"
             whileHover={{ y: -5, scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
+            onClick={(e) => e.stopPropagation()}
           >
             <Instagram size={20} />
           </motion.a>
@@ -824,6 +826,7 @@ function App() {
             className="social-icon gmail"
             whileHover={{ y: -5, scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
+            onClick={(e) => e.stopPropagation()}
           >
             <Mail size={20} />
           </motion.a>
