@@ -395,13 +395,6 @@ const FlowStep = ({ title, sublabel, icon: Icon, isFirst, isLast }) => {
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [theme, setTheme] = useState('dark');
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-  };
 
   const openImage = (url, title) => {
     setSelectedImage({ url, title });
@@ -548,17 +541,6 @@ function App() {
       <div className="bg-grid-animation"></div>
 
       <header className="header">
-        <div className="theme-toggle-container">
-          <motion.button
-            className="theme-toggle"
-            onClick={toggleTheme}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Toggle Theme"
-          >
-            {theme === 'dark' ? <Star size={20} fill="currentColor" /> : <Star size={20} />}
-          </motion.button>
-        </div>
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
