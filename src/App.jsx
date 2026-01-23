@@ -589,6 +589,10 @@ function App() {
             className="cta-button cta-docs"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open('https://docs.google.com/document/d/1rEAe7CHuj5HxD7kyDUEUpoZ2yRLVTNQGjt9M5G7-PcE/edit?tab=t.0', '_blank');
+            }}
           >
             <FileText size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
             <span>VER DOCUMENTACIÓN</span>
@@ -601,6 +605,10 @@ function App() {
             className="cta-button cta-security"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open('https://docs.google.com/document/d/1Rtjq7Fnh_YBjZW8zRLYN3T8oj6CvZkY_OKCeWRu5vZQ/edit?tab=t.0', '_blank');
+            }}
           >
             <ShieldAlert size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
             <span>VER INFORME DE SEGURIDAD</span>
