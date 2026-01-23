@@ -177,6 +177,7 @@ h3,
 .header {
   margin-bottom: 4rem;
   text-align: center;
+  will-change: transform, opacity;
 }
 
 .header h1 {
@@ -230,10 +231,11 @@ h3,
   background-size: 200% auto;
   color: #000;
   border: none;
-  animation: glow-pulse 3s infinite, flow-bg 5s infinite linear;
+  animation: flow-bg 5s infinite linear;
   padding: 1.25rem 3.5rem;
   font-size: 1.25rem;
-  box-shadow: 0 0 30px rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.5);
+  will-change: transform, background-position;
 }
 
 @keyframes flow-bg {
@@ -1222,9 +1224,10 @@ h3,
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  animation: shine 4s linear infinite;
-  text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+  animation: shine 6s linear infinite;
+  text-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
   display: inline-block;
+  will-change: background-position;
 }
 
 @keyframes shine {

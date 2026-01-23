@@ -542,34 +542,35 @@ function App() {
 
       <header className="header">
         <motion.h1
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.2, 1, 0.2, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}
         >
           <Bot size={48} className="text-accent-blue" strokeWidth={1.5} style={{ filter: 'drop-shadow(0 0 15px rgba(56, 189, 248, 0.5))' }} />
           <span className="premium-title">Página web inteligente para tu negocio</span>
         </motion.h1>
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.2, 1, 0.2, 1] }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           style={{ maxWidth: '700px', margin: '1.5rem auto 0' }}
         >
           Recibe datos de clientes, envía mensajes automáticos por WhatsApp o email y entrega links personalizados, todo sin que tengas que hacerlo a mano.
         </motion.p>
         <motion.div
           className="button-group"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.2, 1, 0.2, 1] }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <motion.a
             href="https://osorock.netlify.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="cta-button cta-featured"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <span>VER PROYECTO</span>
           </motion.a>
@@ -577,23 +578,29 @@ function App() {
 
         <motion.div
           className="button-group"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.2, 1, 0.2, 1] }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
           <motion.a
-            href="#"
+            href="https://docs.google.com/document/d/1rEAe7CHuj5HxD7kyDUEUpoZ2yRLVTNQGjt9M5G7-PcE/edit?tab=t.0"
+            target="_blank"
+            rel="noopener noreferrer"
             className="cta-button cta-docs"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <FileText size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
             <span>VER DOCUMENTACIÓN</span>
           </motion.a>
 
           <motion.a
-            href="#"
+            href="https://docs.google.com/document/d/1Rtjq7Fnh_YBjZW8zRLYN3T8oj6CvZkY_OKCeWRu5vZQ/edit?tab=t.0"
+            target="_blank"
+            rel="noopener noreferrer"
             className="cta-button cta-security"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <ShieldAlert size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
             <span>VER INFORME DE SEGURIDAD</span>
